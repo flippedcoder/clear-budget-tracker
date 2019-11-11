@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+class Stats extends Component {
 
 
     render() {
         return (
             <div className="container">
-                home works
+                stats work
             </div>
         );
     }
 }
 
-export default Home;
+export default Stats;

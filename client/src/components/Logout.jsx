@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+class Logout extends Component {
 
 
     render() {
         return (
             <div className="container">
-                home works
+                logout works
             </div>
         );
     }
 }
 
-export default Home;
+export default Logout;

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+class Goals extends Component {
 
 
     render() {
         return (
             <div className="container">
-                home works
+                goals work
             </div>
         );
     }
 }
 
-export default Home;
+export default Goals;

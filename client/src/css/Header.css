@@ -1,0 +1,21 @@
+#header {
+    display: flex;
+    font-size: 36px;
+    height: 100px;
+    margin: 0;
+    max-height: 100px;
+}
+
+#header > div {
+    margin-left: 75%;
+}
+
+#header > p {
+    margin: 0 0 0 24px;
+}
+
+@media only screen and (max-width: 600px) {
+    #header {
+        padding-right: 175px;
+    }
+}

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+class Settings extends Component {
 
 
     render() {
         return (
             <div className="container">
-                home works
+                settings work
             </div>
         );
     }
 }
 
-export default Home;
+export default Settings;

@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
+import '../../css/Header.css';
+import _Menu from './_Menu';
+
 class Header extends Component {
     constructor() {
+        super();
+
         this.state = {
             showMenu: false
         };
@@ -18,13 +23,22 @@ class Header extends Component {
     }
 
     render() {
+        let menu = null;
+
+        if (this.state.showMenu) {
+            menu = <_Menu />;
+        }
+
         return (
-            <div id="header">
-                <div>username</div>
-                <p onClick={this.openMenu}>
-                    <FontAwesomeIcon icon={faBomb}
-                        id="menu-icon" />
-                </p>
+            <div>
+                <div id="header">
+                    <div>username</div>
+                    <p onClick={this.openMenu}>
+                        <FontAwesomeIcon icon={faBars}
+                            id="menu-icon" />
+                    </p>
+                </div>
+                {menu}
             </div>
         );
     }
