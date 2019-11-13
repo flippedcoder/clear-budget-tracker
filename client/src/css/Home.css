@@ -1,0 +1,44 @@
+.add-item {
+    width: 50%;
+}
+
+.center-content {
+    font-size: 24px;
+    text-align: center;
+}
+
+.container {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.flex-2 {
+    display: flex;
+    margin: 0 auto;
+}
+
+.graph-stats {
+    width: 50%;
+}
+
+.graph-stats > .flex-2 p {
+    border: 1px solid;
+    margin: auto;
+    width: 100px;
+}
+
+#month-to-date-graph {
+    border: 1px solid;
+    height: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+#month-to-date-total {
+    background-color: #ABABAB;
+    border: 1px solid;
+    font-size: 36px;
+    margin: 0 auto 50px auto;
+    text-align: center;
+    width: 100%;
+}
