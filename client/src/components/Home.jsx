@@ -6,7 +6,10 @@ class Home extends Component {
     render() {
         return (
             <div className="container">
-                home works
+                <div id="home-month-total">
+                    <p>Spent this month</p>
+                    <p>$123.45</p>
+                </div>
             </div>
         );
     }
