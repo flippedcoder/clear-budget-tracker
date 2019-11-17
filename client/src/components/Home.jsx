@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
-import { VictoryPie } from 'victory';
+import { VictoryArea, VictoryChart, VictoryPie, VictoryTheme } from 'victory';
 
 import '../css/Home.css';
 
@@ -37,6 +37,37 @@ class Home extends Component {
     }
 
     render() {
+        let statsGraph = null;
+
+        if (this.state.statsGraphType === 'type') {
+            statsGraph = <VictoryPie
+                colorScale={["tomato", "gold", "navy"]}
+                cornerRadius={7}
+                // TODO: get data array from App.jsx
+                // data={this.props.data}
+                data={[
+                    { x: "Food", y: 27 },
+                    { x: "Bills", y: 42 },
+                    { x: "Stuff", y: 31 }
+                ]}
+                height={300}
+                innerRadius={50}
+            />
+        }
+        else {
+            statsGraph = <VictoryChart
+            theme={VictoryTheme.material}
+          >
+            <VictoryArea
+              style={{ data: { fill: "#c43a31" } }}
+              data={[
+                { x: "Food", y: 27 },
+                { x: "Bills", y: 42 },
+                { x: "Stuff", y: 31 }
+            ]}
+            />
+          </VictoryChart>
+        }
         return (
             <div className="container">
                 <div id="month-to-date-total">
@@ -45,19 +76,7 @@ class Home extends Component {
                 </div>
                 <div id="month-to-date-graph">
                     <div className="graph-container">
-                        <VictoryPie
-                            colorScale={["tomato", "gold", "navy"]}
-                            cornerRadius={7}
-                            // TODO: get data array from App.jsx
-                            // data={this.props.data}
-                            data={[
-                                { x: "Food", y: 27 },
-                                { x: "Bills", y: 42 },
-                                { x: "Stuff", y: 31 }
-                            ]}
-                            height={300}
-                            innerRadius={50}
-                        />
+                        {statsGraph}
                     </div>
                 </div>
                 <footer className="flex-2">

@@ -7,7 +7,6 @@ import Goals from '../components/Goals';
 import Items from '../components/Items';
 import Logout from '../components/Logout';
 import Settings from '../components/Settings';
-import Stats from '../components/Stats';
 
 class App extends Component {
 
@@ -22,7 +21,6 @@ class App extends Component {
                 <Route path="/items" component={Items} />
                 <Route path="/logout" component={Logout} />
                 <Route path="/settings" component={Settings} />
-                <Route path="/stats" component={Stats} />
             </Router>
         );
     }

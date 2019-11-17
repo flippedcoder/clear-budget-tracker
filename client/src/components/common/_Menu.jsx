@@ -9,9 +9,6 @@ class _Menu extends Component {
             <div id="menu">
                 <ul>
                     <li>
-                        <Link to="/stats">Stats</Link>
-                    </li>
-                    <li>
                         <Link to="/items">Items</Link>
                     </li>
                     <li>
