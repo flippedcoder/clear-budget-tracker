@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CreateItemModal from './CreateItemModal';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 import '../css/Items.css';
@@ -54,6 +55,11 @@ class Items extends Component {
     }
 
     render() {
+        let newItemModal = null;
+
+        if (this.state.showItemModal) {
+            newItemModal = <CreateItemModal />
+        }
         return (
             <div className="container">
                 <div id="item-options">
@@ -77,6 +83,7 @@ class Items extends Component {
                         <div className="col-3">${item.amount}</div>
                     </div>;
                 })}
+                {newItemModal}
             </div>
         );
     }

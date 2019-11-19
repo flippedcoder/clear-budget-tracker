@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import CreateItemModal from './CreateItemModal';
 import { VictoryArea, VictoryChart, VictoryPie, VictoryTheme } from 'victory';
 
 import '../css/Home.css';
@@ -37,7 +38,12 @@ class Home extends Component {
     }
 
     render() {
+        let newItemModal = null;
         let statsGraph = null;
+
+        if (this.state.showItemModal) {
+            newItemModal = <CreateItemModal />
+        }
 
         if (this.state.statsGraphType === 'type') {
             statsGraph = <VictoryPie
@@ -94,6 +100,7 @@ class Home extends Component {
                         </div>
                     </div>
                 </footer>
+                {newItemModal}
             </div>
         );
     }

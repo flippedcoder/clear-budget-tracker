@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare, faCheck, faBomb } from '@fortawesome/free-solid-svg-icons';
+import CreateGoalModal from './CreateGoalModal';
 import axios from 'axios';
 
 import '../css/Goals.css';
@@ -63,6 +64,11 @@ class Goals extends Component {
 
     render() {
         let goalStatusIcon = null;
+        let newGoalModal = null;
+
+        if (this.state.showGoalModal) {
+            newGoalModal = <CreateGoalModal />
+        }
 
         if (this.state.isCompleted) {
             goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
@@ -95,6 +101,7 @@ class Goals extends Component {
                         <div className="col-3">{goalStatusIcon}</div>
                     </div>;
                 })}
+                {newGoalModal}
             </div>
         );
     }
