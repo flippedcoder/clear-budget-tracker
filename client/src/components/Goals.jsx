@@ -12,38 +12,24 @@ class Goals extends Component {
 
         this.state = {
             goalList: [],
-            isCompleted: false,
             showGoalModal: false
         };
 
+        this.getAllGoals = this.getAllGoals.bind(this);
         this.showAddGoalModal = this.showAddGoalModal.bind(this);
-        this.updateGoalStatus = this.updateGoalStatus.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            goalList: [
-                {
-                    date: '11/03/2019',
-                    id: 1,
-                    isCompleted: false,
-                    name: 'sell something'
-                },
-                {
-                    date: '11/06/2019',
-                    id: 2,
-                    isCompleted: false,
-                    name: 'save $150'
-                },
-                {
-                    date: '11/09/2019',
-                    id: 3,
-                    isCompleted: false,
-                    name: 'only eat out once'
-                }
-            ],
-            isCompleted: true
-        });
+        this.getAllGoals();
+    }
+
+    getAllGoals() {
+        axios.get('http://localhost:3010/api/getAllGoals')
+            .then(goalList => {
+                this.setState({
+                    goalList: goalList.data
+                });
+            });
     }
 
     showAddGoalModal() {
@@ -51,14 +37,6 @@ class Goals extends Component {
 
         this.setState({
             showGoalModal: !showGoalModal
-        });
-    }
-
-    updateGoalStatus() {
-        let isCompleted = this.state.isCompleted;
-
-        this.setState({
-            isCompleted: !isCompleted
         });
     }
 
@@ -77,7 +55,6 @@ class Goals extends Component {
         }
         else {
             goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
-                onClick={this.updateGoalStatus}
                 icon={faBomb} />
         }
 
@@ -95,9 +72,9 @@ class Goals extends Component {
                     </p>
                 </div>
                 {this.state.goalList.map(goal => {
-                    return <div className="row" key={goal.id}>
-                        <div className="col-3">{goal.name}</div>
-                        <div className="col-3">{goal.date}</div>
+                    return <div className="row" key={goal._id}>
+                        <div className="col-3">{goal.title}</div>
+                        <div className="col-3">{new Date(goal.completeByDate).toLocaleDateString()}</div>
                         <div className="col-3">{goalStatusIcon}</div>
                     </div>;
                 })}

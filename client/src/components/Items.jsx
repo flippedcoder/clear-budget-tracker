@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CreateItemModal from './CreateItemModal';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 import '../css/Items.css';
 
@@ -10,37 +11,26 @@ class Items extends Component {
         super();
         this.state = {
             itemList: [],
-            showItemModal: false
+            showItemModal: false,
+            total: 0
         };
+
+        this.getAllItems = this.getAllItems.bind(this);
         this.showAddItemModal = this.showAddItemModal.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            itemList: [
-                {
-                    amount: 12.34,
-                    category: 'food',
-                    date: '11/03/2019',
-                    id: 1,
-                    name: 'pizza'
-                },
-                {
-                    amount: 2.34,
-                    category: 'food',
-                    date: '11/06/2019',
-                    id: 2,
-                    name: 'fries'
-                },
-                {
-                    amount: 22.34,
-                    category: 'food',
-                    date: '11/09/2019',
-                    id: 3,
-                    name: 'pasta'
-                }
-            ]
-        })
+        this.getAllItems();
+    }
+
+    getAllItems() {
+        axios.get('http://localhost:3010/api/getAllItems')
+            .then(itemList => {
+                this.setState({
+                    itemList: itemList.data,
+                    //total: itemList
+                });
+            });
     }
 
     showAddItemModal() {
@@ -48,10 +38,6 @@ class Items extends Component {
         this.setState({
             showItemModal: !showItemModal
         });
-    }
-
-    showItems() {
-
     }
 
     render() {
@@ -63,9 +49,9 @@ class Items extends Component {
         return (
             <div className="container">
                 <div id="item-options">
-                    <p>Total: $123.45</p>
+                    <p>Total: ${this.state.total}</p>
                     <div>
-                        <label for="sortBy">Sort By: </label>
+                        <label htmlFor="sortBy">Sort By: </label>
                         <select name="sortBy">
                             <option value="type">Type</option>
                             <option value="date">Date</option>
@@ -77,10 +63,10 @@ class Items extends Component {
                     </p>
                 </div>
                 {this.state.itemList.map(item => {
-                    return <div className="row" key={item.id}>
-                        <div className="col-3">{item.name}</div>
-                        <div className="col-3">{item.date}</div>
-                        <div className="col-3">${item.amount}</div>
+                    return <div className="row" key={item._id}>
+                        <div className="col-3">{item.title}</div>
+                        <div className="col-3">{new Date(item.date).toLocaleDateString()}</div>
+                        <div className="col-3">${item.cost}</div>
                     </div>;
                 })}
                 {newItemModal}
