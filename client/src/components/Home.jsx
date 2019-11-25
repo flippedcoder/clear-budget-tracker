@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import CreateItemModal from './CreateItemModal';
@@ -11,11 +12,33 @@ class Home extends Component {
         super();
         this.state = {
             showItemModal: false,
-            statsGraphType: 'week'
+            statsGraphType: 'week',
+            total: 0
         };
+
+        this.getAllItems = this.getAllItems.bind(this);
         this.showAddItemModal = this.showAddItemModal.bind(this);
         this.showStatsByType = this.showStatsByType.bind(this);
         this.showStatsByWeek = this.showStatsByWeek.bind(this);
+    }
+
+    componentDidMount() {
+        this.getAllItems();
+    }
+
+    getAllItems() {
+        axios.get('http://localhost:3010/api/getAllItems')
+            .then(itemList => {
+                let total = 0;
+                
+                itemList.data.forEach(item => {
+                    total += item.cost;
+                });
+
+                this.setState({
+                    total: total
+                });
+            });
     }
 
     showAddItemModal() {
@@ -78,7 +101,7 @@ class Home extends Component {
             <div className="container">
                 <div id="month-to-date-total">
                     <p>Spent this month</p>
-                    <p>$123.45</p>
+                    <p>${this.state.total}</p>
                 </div>
                 <div id="month-to-date-graph">
                     <div className="graph-container">

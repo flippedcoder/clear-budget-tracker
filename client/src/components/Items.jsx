@@ -26,9 +26,15 @@ class Items extends Component {
     getAllItems() {
         axios.get('http://localhost:3010/api/getAllItems')
             .then(itemList => {
+                let total = 0;
+                
+                itemList.data.forEach(item => {
+                    total += item.cost;
+                });
+
                 this.setState({
                     itemList: itemList.data,
-                    //total: itemList
+                    total: total
                 });
             });
     }
