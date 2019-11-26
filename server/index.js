@@ -73,6 +73,7 @@ app.post('/api/createItem/', (req, res) => {
     let itemData = req.body.itemData;
 
     Items.create({ 
+        category: itemData.category,
         cost: itemData.cost,
         date: Date.now(),
         title: itemData.title

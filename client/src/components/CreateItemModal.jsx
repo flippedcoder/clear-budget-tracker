@@ -24,6 +24,7 @@ class CreateItemModal extends Component {
 
     saveItem(e) {
         let itemData = {
+            category: e.target.category.value,
             cost: e.target.cost.value,
             title: e.target.title.value
         };
@@ -43,6 +44,10 @@ class CreateItemModal extends Component {
                     <div>
                         <label htmlFor="title">Title of item: </label>
                         <input type="text" name="title" />
+                    </div>
+                    <div>
+                        <label htmlFor="category">Category of item: </label>
+                        <input type="text" name="category" />
                     </div>
                     <div>
                         <label htmlFor="date">Date of item: </label>

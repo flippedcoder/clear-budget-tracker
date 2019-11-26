@@ -17,6 +17,7 @@ class Goals extends Component {
 
         this.getAllGoals = this.getAllGoals.bind(this);
         this.showAddGoalModal = this.showAddGoalModal.bind(this);
+        this.updateGoalStatus = this.updateGoalStatus.bind(this);
     }
 
     componentDidMount() {
@@ -40,22 +41,15 @@ class Goals extends Component {
         });
     }
 
+    updateGoalStatus(goalId) {
+        return goalId;
+    }
+
     render() {
-        let goalStatusIcon = null;
         let newGoalModal = null;
 
         if (this.state.showGoalModal) {
             newGoalModal = <CreateGoalModal />
-        }
-
-        if (this.state.isCompleted) {
-            goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
-                onClick={this.updateGoalStatus}
-                icon={faCheck} />
-        }
-        else {
-            goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
-                icon={faBomb} />
         }
 
         return (
@@ -72,6 +66,18 @@ class Goals extends Component {
                     </p>
                 </div>
                 {this.state.goalList.map(goal => {
+                    let goalStatusIcon = null;
+
+                    if (this.state.isCompleted) {
+                        goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
+                            onClick={this.updateGoalStatus}
+                            icon={faCheck} />
+                    }
+                    else {
+                        goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
+                            icon={faBomb} />
+                    }
+
                     return <div className="row" key={goal._id}>
                         <div className="col-3">{goal.title}</div>
                         <div className="col-3">{new Date(goal.completeByDate).toLocaleDateString()}</div>

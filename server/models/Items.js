@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
+    category: String,
     cost: Number,
     date: Date,
     title: String

@@ -11,6 +11,7 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
+            itemList: [],
             showItemModal: false,
             statsGraphType: 'week',
             total: 0
@@ -35,9 +36,10 @@ class Home extends Component {
                     total += item.cost;
                 });
 
-                this.setState({
+                this.setState(prevState => ({
+                    itemList: prevState.itemList.concat(itemList.data),
                     total: total
-                });
+                }));
             });
     }
 
@@ -63,6 +65,26 @@ class Home extends Component {
     render() {
         let newItemModal = null;
         let statsGraph = null;
+        
+        let billsData = this.state.itemList.filter(item => item.category === 'Bills');
+        let foodData = this.state.itemList.filter(item => item.category === 'Food');
+        let stuffData = this.state.itemList.filter(item => item.category === 'Stuff');
+
+        let billsTotal = 0;
+        let foodTotal = 0;
+        let stuffTotal = 0;
+        
+        billsData.forEach(bill => {
+            billsTotal += bill.cost;
+        });
+        
+        foodData.forEach(food => {
+            foodTotal += food.cost;
+        });
+        
+        stuffData.forEach(stuff => {
+            stuffTotal += stuff.cost;
+        });
 
         if (this.state.showItemModal) {
             newItemModal = <CreateItemModal />
@@ -75,9 +97,9 @@ class Home extends Component {
                 // TODO: get data array from App.jsx
                 // data={this.props.data}
                 data={[
-                    { x: "Food", y: 27 },
-                    { x: "Bills", y: 42 },
-                    { x: "Stuff", y: 31 }
+                    { x: "Food", y: ((foodTotal / this.state.total) * 100) },
+                    { x: "Bills", y: ((billsTotal / this.state.total) * 100) },
+                    { x: "Stuff", y: ((stuffTotal / this.state.total) * 100) }
                 ]}
                 height={300}
                 innerRadius={50}
@@ -90,9 +112,9 @@ class Home extends Component {
             <VictoryArea
               style={{ data: { fill: "#c43a31" } }}
               data={[
-                { x: "Food", y: 27 },
-                { x: "Bills", y: 42 },
-                { x: "Stuff", y: 31 }
+                { x: "Food", y: foodTotal },
+                { x: "Bills", y: billsTotal },
+                { x: "Stuff", y: stuffTotal }
             ]}
             />
           </VictoryChart>
