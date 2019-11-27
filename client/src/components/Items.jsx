@@ -17,6 +17,9 @@ class Items extends Component {
 
         this.getAllItems = this.getAllItems.bind(this);
         this.showAddItemModal = this.showAddItemModal.bind(this);
+        this.sortItems = this.sortItems.bind(this);
+        this._sortByDate = this._sortByDate.bind(this);
+        this._sortByType = this._sortByType.bind(this);
     }
 
     componentDidMount() {
@@ -46,6 +49,34 @@ class Items extends Component {
         });
     }
 
+    sortItems(e) {
+        let sortBy = e.target.value;
+        let sortedItems = [];
+
+        if (sortBy === "date") {
+            sortedItems = this.state.itemList.sort(this._sortByDate);
+        }
+
+        if (sortBy === "type") {
+            sortedItems = this.state.itemList.sort(this._sortByType);
+        }
+
+        this.setState({
+            itemList: sortedItems
+        });
+    }
+
+    _sortByDate(a, b) {
+        let dateA = new Date(a.date).getTime(); 
+        let dateB = new Date(b.date).getTime(); 
+
+        return dateA > dateB ? 1 : -1;
+    }
+
+    _sortByType(a, b) {
+        return a.category > b.category ? 1 : -1;
+    }
+
     render() {
         let newItemModal = null;
 
@@ -58,7 +89,7 @@ class Items extends Component {
                     <p>Total: ${this.state.total}</p>
                     <div>
                         <label htmlFor="sortBy">Sort By: </label>
-                        <select name="sortBy">
+                        <select name="sortBy" onChange={this.sortItems}>
                             <option value="type">Type</option>
                             <option value="date">Date</option>
                         </select>
@@ -71,6 +102,7 @@ class Items extends Component {
                 {this.state.itemList.map(item => {
                     return <div className="row" key={item._id}>
                         <div className="col-3">{item.title}</div>
+                        <div className="col-3">{item.category}</div>
                         <div className="col-3">{new Date(item.date).toLocaleDateString()}</div>
                         <div className="col-3">${item.cost}</div>
                     </div>;

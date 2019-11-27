@@ -50,10 +50,6 @@ class CreateItemModal extends Component {
                         <input type="text" name="category" />
                     </div>
                     <div>
-                        <label htmlFor="date">Date of item: </label>
-                        <input type="date" name="date" />
-                    </div>
-                    <div>
                         <label htmlFor="cost">Cost of item: </label>
                         <input type="number" step=".01" name="cost" />
                     </div>
