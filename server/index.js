@@ -1,7 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
-
+const path = require('path');
 const Goals = require('./models/Goals');
 const Items = require('./models/Items');
 
@@ -20,6 +20,7 @@ app.listen(3010, () => {
 });
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, '/build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -86,4 +87,8 @@ app.post('/api/createItem/', (req, res) => {
         res.status(200);
         res.send(newItem);
     });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/build/index.html'));
 });
