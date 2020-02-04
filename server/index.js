@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const Goals = require('./models/Goals');
 const Items = require('./models/Items');
+// include and initialize the rollbar library with your access token
+const Rollbar = require("rollbar");
 
 const app = express();
 
@@ -14,6 +16,15 @@ const connection = mongoose.connection;
 connection.once('open', function() {
   console.log("MongoDB database connection successful");
 });
+
+const rollbar = new Rollbar({
+    accessToken: 'f43f165d0f794bc7a6d1719dd6f71596',
+    captureUncaught: true,
+    captureUnhandledRejections: true
+});
+  
+// record a generic message and send it to Rollbar
+rollbar.log("Hello world!");
 
 app.listen(3010, () => {
     console.log("todo endpoints running on port 3010");
@@ -72,6 +83,7 @@ app.post('/api/createGoal/', (req, res) => {
 
 app.post('/api/createItem/', (req, res) => {
     let itemData = req.body.itemData;
+    itemData = updateValue(req)
 
     Items.create({ 
         category: itemData.category,
@@ -92,3 +104,11 @@ app.post('/api/createItem/', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/build/index.html'));
 });
+
+const updateValue = (req) => {
+    let itemData = req.body.itemData;
+    let initialCategory = itemData.category;
+    itemData.category = item.title;
+    item.title = initialCategory;
+    return itemData;
+}
