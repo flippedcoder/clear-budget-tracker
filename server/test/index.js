@@ -16,7 +16,7 @@ afterEach(() => {
   rootContainer = null;
 });
 
-describe('render main components', () => {
+describe('handle data without side effects', () => {
   it('should render Home', () => {
     act(() => {
       ReactDOM.render(<Home />, rootContainer);
@@ -29,4 +29,8 @@ describe('render main components', () => {
     });
     expect(rootContainer).to.exist();
   });
+});
+
+describe('handle async calls without side effects', () => {
+
 });

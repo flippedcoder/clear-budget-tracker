@@ -55,6 +55,10 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.8.3",
-    "ignore-styles": "^5.0.1"
+    "ignore-styles": "^5.0.1",
+    "enzyme": "@latest",
+    "enzyme-adapter-react-16": "@latest",
+    "jasmine-enzyme": "@latest",
+    "jsdom": "@latest"
   }
 }

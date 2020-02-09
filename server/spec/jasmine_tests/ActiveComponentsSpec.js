@@ -1,7 +1,7 @@
 import Goals from '../../src/components/Goals';
 import Items from '../../src/components/Items';
 
-describe("Active Components tests", () => {
+describe("handle data without side effects", () => {
   it("should render Goals", () => {
     expect(Goals).toEqual(true);
   });
@@ -50,4 +50,8 @@ describe("Active Components tests", () => {
   //     }).toThrowError("song is already playing");
   //   });
   // });
+});
+
+describe("should handle async calls without side effects", () => {
+
 });
