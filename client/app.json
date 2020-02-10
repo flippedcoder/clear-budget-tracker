@@ -2,7 +2,8 @@
     "environments": {
       "test": {
         "scripts": {
-            "test": "cd ./client jest"
+            "test-setup": "cd ./client",
+            "test": "jest"
         }
       }
     }
