@@ -8,7 +8,7 @@
       "test": {
         "scripts": {
             "test-setup": "cd ./client",
-            "test": "jest"
+            "test": "npm run jestTest"
         }
       }
     }
