@@ -7,7 +7,7 @@
     "environments": {
       "test": {
         "scripts": {
-            "test-setup": "cd ./server",
+            "test-setup": "cd ./server npm install",
             "test": "npm run jestTest"
         }
       }
