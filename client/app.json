@@ -1,4 +1,9 @@
 {
+    "buildpacks": [
+        {
+        "url": "heroku/nodejs"
+        }
+    ],
     "environments": {
       "test": {
         "scripts": {
@@ -6,10 +11,5 @@
             "test": "jest"
         }
       }
-    },
-    "buildpacks": [
-        {
-        "url": "heroku/nodejs"
-        }
-    ]
+    }
   }
