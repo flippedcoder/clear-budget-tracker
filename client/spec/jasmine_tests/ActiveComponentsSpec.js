@@ -1,22 +1,30 @@
-import Home from '../../src/components/Home';
+import React from 'react';
+import jasmineEnzyme from 'jasmine-enzyme';
+import ReactTestUtils from 'react-dom/test-utils';
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import Items from '../../src/components/Items';
 
-describe("main components render", () => {
-  it("should render Home", () => {
-    expect(Home).toEqual(true);
-  });
+configure({ adapter: new Adapter() });
 
-  it("should render Items", () => {
-    expect(Items).toEqual(true);
-  });
+beforeEach(() => {
+    jasmineEnzyme();
 });
 
-describe("main components do stuff", () => {
-  it("should render Home", () => {
-    expect(Home).toEqual(true);
-  });
+describe("main components render with jasmine", () => {
+    it("should render Items", () => {
+        const element = React.createElement(Items);
 
-  it("should render Items", () => {
-    expect(Items).toEqual(true);
-  });
+        expect(() => {
+            ReactTestUtils.renderIntoDocument(element);
+        }).not.toThrow();
+    });
+
+    it('should show CreateNewItem modal from click', () => {
+        ReactTestUtils.Simulate.click('#add-item-icon');
+
+        expect(() => {
+            ReactTestUtils.findRenderedDOMComponentWithTag('form');
+        }).toBeTruthy();
+    })
 });

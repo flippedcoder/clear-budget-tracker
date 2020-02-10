@@ -1,1 +1,1 @@
-import 'ignore-styles';
+require('ignore-styles');

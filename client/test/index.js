@@ -1,50 +1,21 @@
 import React from 'react';
-import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
-import { expect } from "chai";
-import Home from '../src/components/Home';
+import Adapter from 'enzyme-adapter-react-16';
+import { shallow, configure } from 'enzyme';
+import { expect, assert } from "chai";
 import Items from '../src/components/Items';
+import CreateItemModal from '../src/components/CreateItemModal';
 
-let rootContainer;
-
-// beforeEach(() => {
-//   rootContainer = document.createElement("div");
-//   document.body.appendChild(rootContainer);
-// });
-
-// afterEach(() => {
-//   document.body.removeChild(rootContainer);
-//   rootContainer = null;
-// });
+configure({adapter: new Adapter()});
 
 describe('render main components', () => {
-  it('should render Home', () => {
-		const div = document.createElement('div');
-    act(() => {
-      ReactDOM.render(<Home />, div);
+    it('should render Items', () => {
+      const wrapper = shallow(<Items/>);
+      expect(wrapper.find('label')).to.have.length(2);
     });
-    expect(rootContainer).to.exist();
-  });
-  it('should render Items', () => {
-    act(() => {
-      ReactDOM.render(<Items />, rootContainer);
-    });
-    expect(rootContainer).to.exist();
-  });
-});
 
-describe('main components can do stuff', () => {
-  it('should render Home', () => {
-		const div = document.createElement('div');
-    act(() => {
-      ReactDOM.render(<Home />, div);
-    });
-    expect(rootContainer).to.exist();
-  });
-  it('should render Items', () => {
-    act(() => {
-      ReactDOM.render(<Items />, rootContainer);
-    });
-    expect(rootContainer).to.exist();
-  });
+    it('should open CreateNewItem modal', () => {
+        const wrapper = shallow(<Items/>);
+		wrapper.find('#add-item-icon').simulate('click');
+		assert.exists(<CreateItemModal />, 'this does not exist unfortunately');
+    })
 });

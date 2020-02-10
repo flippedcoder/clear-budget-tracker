@@ -1,57 +1,58 @@
-import Goals from '../../src/components/Goals';
-import Items from '../../src/components/Items';
+const request = require('request');
+const server = require('../../index.js');
 
-describe("handle data without side effects", () => {
-  it("should render Goals", () => {
-    expect(Goals).toEqual(true);
-  });
+describe("GET endpoint test", () => {
+    let data = {};
 
-  it("should render Items", () => {
-    expect(Items).toEqual(true);
-  });
+    beforeAll(async (done) => {
+        await request.get('http://localhost:3010/api/getAllItems', (res, body) => {
+            data.status = res.statusCode;
+            data.body = JSON.parse(body);
+            done();
+        });
+    });
+    
+    afterAll(() => {
+        server.close();
+    });
 
-  // describe("when song has been paused", function() {
-  //   beforeEach(function() {
-  //     player.play(song);
-  //     player.pause();
-  //   });
+    it('should have 200 status', () => {
+        expect(data.status).toBe(200);
+    });
 
-  //   it("should indicate that the song is currently paused", function() {
-  //     expect(player.isPlaying).toBeFalsy();
-
-  //     // demonstrates use of 'not' with a custom matcher
-  //     expect(player).not.toBePlaying(song);
-  //   });
-
-  //   it("should be possible to resume", function() {
-  //     player.resume();
-  //     expect(player.isPlaying).toBeTruthy();
-  //     expect(player.currentlyPlayingSong).toEqual(song);
-  //   });
-  // });
-
-  // // demonstrates use of spies to intercept and test method calls
-  // it("tells the current song if the user has made it a favorite", function() {
-  //   spyOn(song, 'persistFavoriteStatus');
-
-  //   player.play(song);
-  //   player.makeFavorite();
-
-  //   expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-  // });
-
-  // //demonstrates use of expected exceptions
-  // describe("#resume", function() {
-  //   it("should throw an exception if song is already playing", function() {
-  //     player.play(song);
-
-  //     expect(function() {
-  //       player.resume();
-  //     }).toThrowError("song is already playing");
-  //   });
-  // });
+    it("should return all the item data", () => {
+        expect(data.body).not.toBeNull();
+    });
 });
 
-describe("should handle async calls without side effects", () => {
+describe('POST endpoint test', () => {
+    let data = {};
 
+    beforeAll(async (done) => {
+        await request.post({
+            url: 'http://localhost:3010/api/createItem/',
+            form: {
+                category:'food',
+                title: 'Tacos',
+                cost: 5.55,
+                date: '02/03/2020'
+            }
+        }, (res, body) => {
+            data.status = res.statusCode;
+            data.body = JSON.parse(body);
+            done();
+        });
+    });
+
+    afterAll(() => {
+        server.close();
+    });
+
+    it('should have 200 status', () => {
+        expect(data.status).toBe(200);
+    });
+
+    it("should have new item data", () => {
+        expect(data.body).not.toBeNull();
+    });
 });

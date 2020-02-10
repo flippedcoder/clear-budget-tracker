@@ -26,7 +26,7 @@ const rollbar = new Rollbar({
 // record a generic message and send it to Rollbar
 rollbar.log("Hello world!");
 
-app.listen(3010, () => {
+let server = app.listen(3010, () => {
     console.log("todo endpoints running on port 3010");
 });
 
@@ -58,6 +58,7 @@ app.get('/api/getAllItems', (req, res) => {
         }
 
         if (items !== null) {
+            res.status(200);
             res.send(items);
         }
     });
@@ -112,3 +113,5 @@ const updateValue = (req) => {
     item.title = initialCategory;
     return itemData;
 }
+
+module.exports = server;

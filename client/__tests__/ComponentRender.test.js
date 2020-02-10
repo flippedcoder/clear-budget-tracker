@@ -1,24 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../src/components/App';
-import Home from '../src/components/Home';
+import { configure, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import Items from '../src/components/Items';
+import CreateItemModal from '../src/components/CreateItemModal';
 
-jest.fn();
+configure({ adapter: new Adapter() });
+jest.mock('../__mocks__/getAllItemsMockRequest.js');
 
-describe('Main components render', () => {
-	it('App renders without crashing', () => {
-		const div = document.createElement('div');
-		ReactDOM.render(<App />, div);
-		ReactDOM.unmountComponentAtNode(div);
-	});
-
-	it('Home renders without crashing', () => {
-		const div = document.createElement('div');
-		ReactDOM.render(<Home />, div);
-		ReactDOM.unmountComponentAtNode(div);
-	});
-
+describe('Items component works', () => {
 	it('Items renders without crashing', () => {
 		const div = document.createElement('div');
 		ReactDOM.render(<Items />, div);
@@ -26,14 +16,10 @@ describe('Main components render', () => {
 	});
 
 	it('should toggle CreateItemModal', () => {
-		const openItemModal = Items.showAddItemModal();
-		expect(openItemModal).toHaveBeenCalled();
-	});
-});
-
-describe('Main components do stuff', () => {
-	it('should toggle CreateItemModal', () => {
-		const openItemModal = Items.showAddItemModal();
-		expect(openItemModal).toHaveBeenCalled();
+		const div = document.createElement('div');
+		const ItemComponent = shallow(<Items />, div);
+		ItemComponent.find('#add-item-icon').simulate('click');
+		expect(ItemComponent.contains(<CreateItemModal />)).toBe(true);
+		ReactDOM.unmountComponentAtNode(div);
 	});
 });
