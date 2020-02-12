@@ -1,29 +1,37 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import styled from 'styled-components';
 
-import '../../css/_Menu.css';
+const LinkListWrapper = styled.div`
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    margin: unset;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .3s ease-in-out;
+    width: 140px;
+`
+const LinkWrapper = styled.a`
+    color: white;
+    font-size: 18px;
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    text-align: center;
+    text-decoration: none;
+`
 
-class _Menu extends Component {
-    render() {
-        return (
-            <div id="menu">
-                <ul>
-                    <li>
-                        <Link to="/items">Items</Link>
-                    </li>
-                    <li>
-                        <Link to="/goals">Goals</Link>
-                    </li>
-                    <li>
-                        <Link to="/settings">Settings</Link>
-                    </li>
-                    <li>
-                        <Link to="/logout">Log Out</Link>
-                    </li>
-                </ul>
-            </div>
-        );
-    }
+const _Menu = () => {
+    return (
+        <div id="menu">
+            <LinkListWrapper>
+                <LinkWrapper href="/items">Items</LinkWrapper>
+                <LinkWrapper href="/goals">Goals</LinkWrapper>
+                <LinkWrapper href="/settings">Settings</LinkWrapper>
+                <LinkWrapper href="/logout">Log Out</LinkWrapper>
+            </LinkListWrapper>
+        </div>
+    );
 }
 
 export default _Menu;
