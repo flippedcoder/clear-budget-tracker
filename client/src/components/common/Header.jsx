@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import Menu from './Menu';
 
-import _Menu from './_Menu';
-
+const HeaderWrapper = styled.div`
+    background-color: rgba(52, 148, 37, 0.6);
+    display: flex;
+    font-size: 24px;
+    height: 50px;
+    margin-bottom: 24px;
+    padding: unset;
+    vertical-align: center;
+`
 const LinkWrapper = styled.a`
     margin-left: 75%;
     text-decoration: none;
-`
-const HeaderWrapper = styled.div`
-    display: flex;
-    font-size: 24px;
-    height: 100px;
-    margin: 0;
-    max-height: 100px;
 `
 const MenuButtonWrapper = styled.div`
     margin-left: 24px;
@@ -32,7 +33,7 @@ const Header = () => {
                         id="menu-icon" />
                 </MenuButtonWrapper>
             </HeaderWrapper>
-            {showMenu ? <_Menu /> : ''}
+            {showMenu ? <Menu /> : ''}
         </>
     );
 }

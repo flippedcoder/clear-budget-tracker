@@ -21,7 +21,7 @@ const LinkWrapper = styled.a`
     text-decoration: none;
 `
 
-const _Menu = () => {
+const Menu = () => {
     return (
         <div id="menu">
             <LinkListWrapper>
@@ -34,4 +34,4 @@ const _Menu = () => {
     );
 }
 
-export default _Menu;
+export default Menu;
