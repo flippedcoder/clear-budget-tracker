@@ -1,47 +1,30 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
 import '../../css/Header.css';
 import _Menu from './_Menu';
 
-class Header extends Component {
-    constructor() {
-        super();
+const Header = () => {
+    let [showMenu, setShowMenu] = useState(false);
 
-        this.state = {
-            showMenu: false
-        };
-
-        this.openMenu = this.openMenu.bind(this);
+    const showHideMenu = () => {
+        setShowMenu(!showMenu)
     }
 
-    openMenu() {
-        this.setState({
-            showMenu: true
-        });
-    }
-
-    render() {
-        let menu = null;
-
-        if (this.state.showMenu) {
-            menu = <_Menu />;
-        }
-
-        return (
-            <div>
-                <div id="header">
-                    <div>username</div>
-                    <p onClick={this.openMenu}>
-                        <FontAwesomeIcon icon={faBars}
-                            id="menu-icon" />
-                    </p>
-                </div>
-                {menu}
+    return (
+        <>
+            <div id="header">
+                <div>McG</div>
+                <p onClick={() => showHideMenu()}>
+                    <FontAwesomeIcon icon={faBars}
+                        id="menu-icon" />
+                </p>
             </div>
-        );
-    }
+            {showMenu ? <_Menu /> : ''}
+        </>
+    );
 }
 
 export default Header;
