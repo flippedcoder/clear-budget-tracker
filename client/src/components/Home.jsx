@@ -1,11 +1,105 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import CreateItemModal from './CreateItemModal';
 import { VictoryArea, VictoryChart, VictoryPie, VictoryTheme } from 'victory';
 
 import '../css/Home.css';
+
+const Home = () => {
+    const [total, setTotal] = useState(0);
+    const [showItemModal, setShowItemModal] = useState(false);
+    const [statsType, setStatsType] = useState('week');
+
+    let newItemModal = null;
+    let statsGraph = null;
+    
+    let billsData = this.state.itemList.filter(item => item.category === 'Bills');
+    let foodData = this.state.itemList.filter(item => item.category === 'Food');
+    let stuffData = this.state.itemList.filter(item => item.category === 'Stuff');
+
+    let billsTotal = 0;
+    let foodTotal = 0;
+    let stuffTotal = 0;
+    
+    billsData.forEach(bill => {
+        billsTotal += bill.cost;
+    });
+    
+    foodData.forEach(food => {
+        foodTotal += food.cost;
+    });
+    
+    stuffData.forEach(stuff => {
+        stuffTotal += stuff.cost;
+    });
+
+    if (this.state.showItemModal) {
+        newItemModal = <CreateItemModal />
+    }
+
+    if (this.state.statsGraphType === 'type') {
+        statsGraph = <VictoryPie
+            colorScale={["tomato", "gold", "navy"]}
+            cornerRadius={7}
+            // TODO: get data array from App.jsx
+            // data={this.props.data}
+            data={[
+                { x: "Food", y: ((foodTotal / this.state.total) * 100) },
+                { x: "Bills", y: ((billsTotal / this.state.total) * 100) },
+                { x: "Stuff", y: ((stuffTotal / this.state.total) * 100) }
+            ]}
+            height={300}
+            innerRadius={50}
+        />
+    }
+    else {
+        statsGraph = <VictoryChart
+        theme={VictoryTheme.material}
+        >
+        <VictoryArea
+            style={{ data: { fill: "#c43a31" } }}
+            data={[
+            { x: "Food", y: foodTotal },
+            { x: "Bills", y: billsTotal },
+            { x: "Stuff", y: stuffTotal }
+        ]}
+        />
+        </VictoryChart>
+    }
+
+    return (
+        <div className="container">
+            <div id="month-to-date-total">
+                <p>Spent this month</p>
+                <p>${total}</p>
+            </div>
+            <footer className="flex-2">
+                <div className="add-item center-content">
+                    <p>Add Item</p>
+                    <p id="add-item-icon" onClick={() => setShowItemModal(!showItemModal)}>
+                        <FontAwesomeIcon icon={faPlusSquare} />
+                    </p>
+                </div>
+                <div className="graph-stats center-content">
+                    <p>See Other Stats</p>
+                    <div className="flex-2">
+                        <p onClick={() => setStatsType('type')}>By Type</p>
+                        <p onClick={() => setStatsType('week')}>By Week</p>
+                    </div>
+                </div>
+            </footer>
+            <div id="month-to-date-graph">
+                <div className="graph-container">
+                    {statsGraph}
+                </div>
+            </div>
+            {newItemModal}
+        </div>
+    );
+}
 
 class Home extends Component {
     constructor() {
