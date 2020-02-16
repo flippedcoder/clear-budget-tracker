@@ -5,7 +5,8 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Menu from './Menu';
 
 const HeaderWrapper = styled.div`
-    background-color: rgba(52, 148, 37, 0.6);
+    background-color: #243754;
+    color: #fff;
     display: flex;
     font-size: 24px;
     height: 50px;
@@ -14,6 +15,7 @@ const HeaderWrapper = styled.div`
     vertical-align: center;
 `
 const LinkWrapper = styled.a`
+    color: #fff;
     margin-left: 75%;
     text-decoration: none;
 `
