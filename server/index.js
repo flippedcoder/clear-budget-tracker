@@ -109,8 +109,8 @@ app.get('*', (req, res) => {
 const updateValue = (req) => {
     let itemData = req.body.itemData;
     let initialCategory = itemData.category;
-    itemData.category = item.title;
-    item.title = initialCategory;
+    itemData.category = itemData.title;
+    itemData.title = initialCategory;
     return itemData;
 }
 

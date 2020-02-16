@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBomb } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
-import '../css/Modal.css';
-
 class CreateGoalModal extends Component {
     constructor() {
         super();

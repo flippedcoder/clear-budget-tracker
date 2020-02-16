@@ -14,7 +14,13 @@ const AddItem = styled.div`
 `
 const AddItemIcon = styled.div`
     font-size: 50px;
-    margin: 0;
+    margin: 0 auto;
+    max-width: fit-content;
+
+    &:hover {
+        cursor: pointer;
+        font-size: 60px;
+    }
 `
 const Container = styled.main`
     margin: 0 auto;
@@ -138,7 +144,7 @@ const Home = () => {
                 {
                 statsType === 'type' ?
                     <VictoryPie
-                        colorScale={["#243754", "#94ae3f", "#ebebeb"]}
+                        colorScale={["#243754", "#94ae3f", "#1f1d08"]}
                         cornerRadius={7}
                         // TODO: get data array from App.jsx
                         // data={this.props.data}
