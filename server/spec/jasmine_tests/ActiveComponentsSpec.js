@@ -4,11 +4,10 @@ const server = require('../../index.js');
 describe("GET endpoint test", () => {
     let data = {};
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await request.get('http://localhost:3010/api/getAllItems', (res, body) => {
             data.status = res.statusCode;
             data.body = JSON.parse(body);
-            done();
         });
     });
     
@@ -28,8 +27,8 @@ describe("GET endpoint test", () => {
 describe('POST endpoint test', () => {
     let data = {};
 
-    beforeAll(async (done) => {
-        await request.post({
+    beforeAll((done) => {
+        request.post({
             url: 'http://localhost:3010/api/createItem/',
             form: {
                 category:'food',

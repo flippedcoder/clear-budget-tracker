@@ -1,116 +1,137 @@
-import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CreateItemModal from './CreateItemModal';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import CreateItemModal from './CreateItemModal';
 
-import '../css/Items.css';
+const AddItem = styled.div`
+    font-size: 24px;
+    margin: 24px auto 0 auto;
+    text-align: center;
+    width: 50%;
+`
+const AddItemIcon = styled.div`
+    font-size: 50px;
+    margin: 0 auto;
+    max-width: fit-content;
 
-class Items extends Component {
-    constructor() {
-        super();
-        this.state = {
-            itemList: [],
-            showItemModal: false,
-            total: 0
-        };
-
-        this.getAllItems = this.getAllItems.bind(this);
-        this.showAddItemModal = this.showAddItemModal.bind(this);
-        this.sortItems = this.sortItems.bind(this);
-        this._sortByDate = this._sortByDate.bind(this);
-        this._sortByType = this._sortByType.bind(this);
+    &:hover {
+        cursor: pointer;
+        font-size: 60px;
     }
+`
+const Column = styled.div`
+    margin: 0 auto;
+    width: 250px;
+`
+const Container = styled.main`
+    margin: 0 auto;
+    width: 80%;
+`
+const ItemOptions = styled.div`
+    font-size: 24px;
+    text-align: center;
+`
+const Row = styled.div`
+    border-bottom: 1px solid #ABABAB;
+    display: flex;
+    font-size: 24px;
+    padding: 25px 0;
+    width: 100%;
+`
+const RowHeader = styled(Row)`
+    font-weight: bold;
+`
+const Select = styled.select`
+    font-size: 18px;
+`
 
-    componentDidMount() {
-        this.getAllItems();
-    }
+const Items = () => {
+    const [itemList, setItemList] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [total, setTotal] = useState(0);
 
-    getAllItems() {
+    useEffect(() => {
+        getAllItems();
+    }, [])
+
+    const getAllItems = () => {
         axios.get('http://localhost:3010/api/getAllItems')
-            .then(itemList => {
-                let total = 0;
-                
-                itemList.data.forEach(item => {
-                    total += item.cost;
-                });
-
-                this.setState({
-                    itemList: itemList.data,
-                    total: total
-                });
+        .then(itemList => {
+            let total = 0;
+            
+            itemList.data.forEach(item => {
+                total += item.cost;
             });
-    }
 
-    showAddItemModal() {
-        let showItemModal = this.state.showItemModal;
-        this.setState({
-            showItemModal: !showItemModal
+            setItemList(itemList.data);
+            setTotal(total);
         });
     }
 
-    sortItems(e) {
-        let sortBy = e.target.value;
-        let sortedItems = [];
+    const sortItems = e => {        
+        const sortBy = e.target.value;
 
         if (sortBy === "date") {
-            sortedItems = this.state.itemList.sort(this._sortByDate);
+            const sortedList = [...itemList].sort((a, b) => {
+                    const dateA = new Date(a.date); 
+                    const dateB = new Date(b.date); 
+
+                    return dateB - dateA;
+                });
+            setItemList(sortedList);
         }
 
         if (sortBy === "type") {
-            sortedItems = this.state.itemList.sort(this._sortByType);
+            const sortedList = [...itemList].sort((a, b) => a.category.localeCompare(b.category));
+            setItemList(sortedList);
         }
 
-        this.setState({
-            itemList: sortedItems
-        });
-    }
-
-    _sortByDate(a, b) {
-        let dateA = new Date(a.date).getTime(); 
-        let dateB = new Date(b.date).getTime(); 
-
-        return dateA > dateB ? 1 : -1;
-    }
-
-    _sortByType(a, b) {
-        return a.category > b.category ? 1 : -1;
-    }
-
-    render() {
-        let newItemModal = null;
-
-        if (this.state.showItemModal) {
-            newItemModal = <CreateItemModal />
+        if (sortBy === "cost") {
+            const sortedList = [...itemList].sort((a, b) => b.cost - a.cost);
+            setItemList(sortedList);
         }
-        return (
-            <div className="container">
-                <div id="item-options">
-                    <p>Total: ${this.state.total}</p>
-                    <div>
-                        <label htmlFor="sortBy">Sort By: </label>
-                        <select name="sortBy" onChange={this.sortItems}>
-                            <option value="type">Type</option>
-                            <option value="date">Date</option>
-                        </select>
-                    </div>
-                    <p className="add-item-button">
-                        <label>Add Item:</label>
-                        <FontAwesomeIcon id="add-item-icon" onClick={this.showAddItemModal} icon={faPlusSquare} />
-                    </p>
+    }
+
+    return (
+        <Container>
+            <ItemOptions>
+                <p>Total: {total.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2})}</p>
+                <div>
+                    <label htmlFor="sortBy">Sort By: </label>
+                    <Select name="sortBy" onChange={e => sortItems(e)}>
+                        <option value="date">Date</option>
+                        <option value="type">Type</option>
+                        <option value="cost">Cost</option>
+                    </Select>
                 </div>
-                {this.state.itemList.map(item => {
-                    return <div className="row" key={item._id}>
-                        <div className="col-3">{item.title}</div>
-                        <div className="col-3">{item.category}</div>
-                        <div className="col-3">{new Date(item.date).toLocaleDateString()}</div>
-                        <div className="col-3">${item.cost}</div>
-                    </div>;
-                })}
-                {newItemModal}
-            </div>
-        );
-    }
+                <AddItem>
+                    Add Item {' '}
+                    <AddItemIcon onClick={() => setShowModal(!showModal)}>
+                        <FontAwesomeIcon icon={faPlusSquare} />
+                    </AddItemIcon>
+                </AddItem>
+            </ItemOptions>
+            <RowHeader>
+                <Column>Item Title</Column>
+                <Column>Category</Column>
+                <Column>Spend Date</Column>
+                <Column>Cost</Column>
+            </RowHeader>
+            {
+                itemList.map(item => (
+                    <Row key={item._id}>
+                        <Column>{item.title}</Column>
+                        <Column>{item.category}</Column>
+                        <Column>{new Date(item.date).toLocaleDateString()}</Column>
+                        <Column>{item.cost.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2})}</Column>
+                    </Row>
+                ))
+            }
+            {showModal && <CreateItemModal />}
+        </Container>
+    );
 }
 
 export default Items;

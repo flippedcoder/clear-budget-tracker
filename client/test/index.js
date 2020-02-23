@@ -15,7 +15,7 @@ describe('render main components', () => {
 
     it('should open CreateNewItem modal', () => {
         const wrapper = shallow(<Items/>);
-		wrapper.find('#add-item-icon').simulate('click');
-		assert.exists(<CreateItemModal />, 'this does not exist unfortunately');
+        wrapper.find('#add-item-icon').simulate('click');
+        assert.exists(<CreateItemModal />, 'this does not exist unfortunately');
     })
 });
