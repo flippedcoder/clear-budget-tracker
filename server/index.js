@@ -82,6 +82,22 @@ app.post('/api/createGoal/', (req, res) => {
     });
 });
 
+app.post('/api/updateGoalStatus/', (req, res) => {
+    let goalData = req.body.goalData;
+
+    Goals.findOneAndUpdate({ _id: goalData._id }, {
+        isComplete: goalData.isComplete
+    }, (err, updatedGoal) => {
+        if (err) {
+            console.error(err);
+            res.send('something went wrong');
+        }
+
+        res.status(200);
+        res.send(updatedGoal);
+    });
+});
+
 app.post('/api/createItem/', (req, res) => {
     let itemData = req.body.itemData;
     itemData = updateValue(req)

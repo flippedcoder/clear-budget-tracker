@@ -57,7 +57,7 @@ const CreateItemModal = () => {
     const [shouldCloseModal, setShouldCloseModal] = useState(true);
 
     const saveItem = (e) => {
-        let itemData = {
+        const itemData = {
             category: e.target.category.value,
             cost: e.target.cost.value,
             title: e.target.title.value

@@ -1,93 +1,114 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare, faCheck, faBomb } from '@fortawesome/free-solid-svg-icons';
 import CreateGoalModal from './CreateGoalModal';
-import axios from 'axios';
 
-import '../css/Goals.css';
+const AddGoal = styled.div`
+    font-size: 24px;
+    margin: 24px auto 0 auto;
+    text-align: center;
+    width: 50%;
+`
+const AddGoalIcon = styled.div`
+    font-size: 50px;
+    margin: 0 auto;
+    max-width: fit-content;
 
-class Goals extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            goalList: [],
-            showGoalModal: false
-        };
-
-        this.getAllGoals = this.getAllGoals.bind(this);
-        this.showAddGoalModal = this.showAddGoalModal.bind(this);
-        this.updateGoalStatus = this.updateGoalStatus.bind(this);
+    &:hover {
+        cursor: pointer;
+        font-size: 60px;
     }
+`
+const Column = styled.div`
+    margin: 0 auto;
+    width: 250px;
+`
+const Container = styled.main`
+    margin: 0 auto;
+    width: 80%;
+`
+const GoalInfo = styled.div`
+    font-size: 24px;
+    text-align: center;
+`
+const Row = styled.div`
+    border-bottom: 1px solid #ABABAB;
+    display: flex;
+    font-size: 24px;
+    padding: 25px 0;
+    width: 100%;
+`
+const RowHeader = styled(Row)`
+    font-weight: bold;
+`
 
-    componentDidMount() {
-        this.getAllGoals();
-    }
+const Goals = () => {
+    const [goalList, setGoalList] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [hasBeenUpdated, setHasBeenUpdated] = useState(false);
 
-    getAllGoals() {
+    useEffect(() => {
+        getAllGoals();
+    }, [hasBeenUpdated])
+
+    const getAllGoals = () => {
         axios.get('http://localhost:3010/api/getAllGoals')
             .then(goalList => {
-                this.setState({
-                    goalList: goalList.data
-                });
+                setGoalList(goalList.data)
             });
     }
 
-    showAddGoalModal() {
-        let showGoalModal = this.state.showGoalModal;
+    const updateGoalStatus = (goalId, currentStatus) => {
+        const goalData = {
+            _id: goalId,
+            isComplete: !currentStatus
+        };
 
-        this.setState({
-            showGoalModal: !showGoalModal
+        axios.post('http://localhost:3010/api/updateGoalStatus', {
+            goalData: goalData
         });
+
+        setHasBeenUpdated(!hasBeenUpdated);
     }
 
-    updateGoalStatus(goalId) {
-        return goalId;
-    }
-
-    render() {
-        let newGoalModal = null;
-
-        if (this.state.showGoalModal) {
-            newGoalModal = <CreateGoalModal />
-        }
-
-        return (
-            <div className="container">
-                <div id="goal-overview">
-                    <p>Remaining Goals: 5</p>
-                    <p>Completed Goals: 2</p>
-                    <p>Failed Goals: 3</p>
-                    <p className="add-goal-button">
-                        <label>Add Goal:</label>
-                        <FontAwesomeIcon id="add-goal-icon"
-                            onClick={this.showAddGoalModal}
-                            icon={faPlusSquare} />
-                    </p>
-                </div>
-                {this.state.goalList.map(goal => {
-                    let goalStatusIcon = null;
-
-                    if (this.state.isCompleted) {
-                        goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
-                            onClick={this.updateGoalStatus}
-                            icon={faCheck} />
+    return (
+        <Container>
+            <GoalInfo>
+                <p>Remaining Goals: 5</p>
+                <p>Completed Goals: 2</p>
+                <p>Failed Goals: 3</p>
+                <AddGoal>
+                    Add Goal {' '}
+                    <AddGoalIcon onClick={() => setShowModal(!showModal)}>
+                        <FontAwesomeIcon icon={faPlusSquare} />
+                    </AddGoalIcon>
+                </AddGoal>
+            </GoalInfo>
+            <RowHeader>
+                <Column>Goal Title</Column>
+                <Column>Complete Goal By</Column>
+                <Column>Is Completed</Column>
+            </RowHeader>
+            {goalList.map(goal => 
+                <Row key={goal._id}>
+                    <Column>{goal.title}</Column>
+                    <Column>{new Date(goal.completeByDate).toLocaleDateString()}</Column>
+                    <Column>
+                    {
+                    goal.isComplete ?
+                        <FontAwesomeIcon icon={faCheck} onClick={() => {updateGoalStatus(goal._id, goal.isComplete)}} />
+                        :
+                        <FontAwesomeIcon icon={faBomb} onClick={() => {updateGoalStatus(goal._id, goal.isComplete)}} />
                     }
-                    else {
-                        goalStatusIcon = <FontAwesomeIcon id="change-goal-status"
-                            icon={faBomb} />
-                    }
-
-                    return <div className="row" key={goal._id}>
-                        <div className="col-3">{goal.title}</div>
-                        <div className="col-3">{new Date(goal.completeByDate).toLocaleDateString()}</div>
-                        <div className="col-3">{goalStatusIcon}</div>
-                    </div>;
-                })}
-                {newGoalModal}
-            </div>
-        );
-    }
+                    </Column>
+                </Row>
+            )}
+            {showModal && <CreateGoalModal />}
+        </Container>
+    );
+    
 }
 
 export default Goals;
