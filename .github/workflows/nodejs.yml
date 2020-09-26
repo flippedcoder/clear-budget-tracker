@@ -23,6 +23,7 @@ jobs:
     - run: snyk auth ${{ secrets.SNYK_TOKEN }}
     - run: snyk test
     - run: npm test
+    - run: npm install -g retire
     - run: retire
       env:
         CI: true

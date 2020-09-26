@@ -8,7 +8,7 @@
       "test": {
         "scripts": {
             "test-setup": "npm install -g snyk retire",
-            "test": "snyk auth SNYK_TOKEN && snyk test && retire"
+            "test": "snyk auth $SNYK_TOKEN && snyk test && retire"
         }
       }
     }
