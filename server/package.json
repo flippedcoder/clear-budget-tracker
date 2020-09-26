@@ -10,11 +10,7 @@
         "rollbar": "^2.14.4"
     },
     "scripts": {
-        "start": "node ./index.js",
-        "test": "mocha --require @babel/register --require ignore-styles test",
-        "jasmineTest": "node node_modules/jasmine/bin/jasmine.js",
-        "jestTest": "jest",
-        "mochaTest": "mocha --require @babel/register --require ignore-styles test"
+        "start": "node ./index.js"
     },
     "jest": {
         "moduleNameMapper": {
