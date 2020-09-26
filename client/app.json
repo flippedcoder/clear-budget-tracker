@@ -7,8 +7,8 @@
     "environments": {
       "test": {
         "scripts": {
-            "test-setup": "cd ./server npm install",
-            "test": "npm run jestTest"
+            "test-setup": "npm install -g snyk retire",
+            "test": "snyk auth SNYK_TOKEN && snyk test && retire"
         }
       }
     }
