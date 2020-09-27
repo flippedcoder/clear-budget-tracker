@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const goalSchema = new mongoose.Schema({
+const goalSchema = new mongoose.Schema(
+  {
     completeByDate: Date,
     isComplete: Boolean,
-    title: String
-},
-{ collection : 'Goals' });
+    title: String,
+  },
+  { collection: 'Goals' }
+)
 
-const Goals = mongoose.model('Goals', goalSchema);
+const Goals = mongoose.model('Goals', goalSchema)
 
-module.exports = Goals;
+module.exports = Goals

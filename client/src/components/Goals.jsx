@@ -34,7 +34,7 @@ const Goals = () => {
       isComplete: !currentStatus,
     }
 
-    axios.post(`${process.env.REACT_APP_API_URL}/updateGoalStatus`, {
+    axios.patch(`${process.env.REACT_APP_API_URL}/updateGoalStatus`, {
       goalData: goalData,
     })
 
