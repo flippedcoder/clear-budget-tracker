@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-class Logout extends Component {
+import Container from './common/Container'
 
-
-    render() {
-        return (
-            <div className="container">
-                logout works
-            </div>
-        );
-    }
+function Logout() {
+  return <Container>logout works</Container>
 }
 
-export default Logout;
+export default Logout

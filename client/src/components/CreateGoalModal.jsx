@@ -2,20 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 
-const CreateGoalModal = () => {
+function CreateGoalModal() {
   const [shouldCloseModal, setShouldCloseModal] = useState(true)
-
-  const saveGoal = (e) => {
-    const goalData = {
-      completeByDate: e.target.completeByDate.value,
-      isComplete: e.target.isComplete.checked,
-      title: e.target.title.value,
-    }
-
-    axios.post('http://localhost:3010/api/createGoal', {
-      goalData: goalData,
-    })
-  }
 
   return (
     <>
@@ -48,6 +36,18 @@ const CreateGoalModal = () => {
       )}
     </>
   )
+}
+
+const saveGoal = (e) => {
+  const goalData = {
+    completeByDate: e.target.completeByDate.value,
+    isComplete: e.target.isComplete.checked,
+    title: e.target.title.value,
+  }
+
+  axios.post(`${process.env.REACT_APP_API_URL}/createGoal`, {
+    goalData: goalData,
+  })
 }
 
 const InputGroup = styled.div`

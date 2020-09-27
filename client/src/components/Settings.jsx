@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Settings extends Component {
-  render() {
-    return <div className="container">settings work</div>
-  }
+import Container from './common/Container'
+
+function Settings() {
+  return <Container>settings work</Container>
 }
 
 export default Settings

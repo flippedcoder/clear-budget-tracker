@@ -10,9 +10,9 @@ import Settings from '../components/Settings'
 
 const Goals = React.lazy(() => import('../components/Goals'))
 
-export const history = createBrowserHistory()
+const history = createBrowserHistory()
 
-const App = () => {
+function App() {
   return (
     <>
       <Header />

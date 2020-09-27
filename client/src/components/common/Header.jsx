@@ -5,7 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import Menu from './Menu'
 
-const Header = () => {
+function Header() {
   const [showMenu, setShowMenu] = useState(false)
 
   return (
