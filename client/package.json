@@ -64,7 +64,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "ignore-styles": "^5.0.1",
     "jasmine-enzyme": "^7.1.2",
-    "jsdom": "^16.4.0",
+    "jsdom": "^16.5.0",
     "react-addons-test-utils": "^15.6.2"
   }
 }
