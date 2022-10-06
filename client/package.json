@@ -18,7 +18,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.3",
     "retire": "^2.2.2",
-    "snyk": "^1.401.0",
+    "snyk": "^1.996.0",
     "styled-components": "^5.0.1",
     "victory": "^33.1.3"
   },
